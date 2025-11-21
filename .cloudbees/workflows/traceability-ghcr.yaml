@@ -20,7 +20,7 @@ jobs:
       - uses: cloudbees-io/kaniko@v1
         name: Push image to ghcr registry
         with:
-          destination: ghcr.io/insights-test-prod/prod-python-hello-world:${{cloudbees.version}}
+          destination: ghcr.io/test-cdro-prod/prod-python-hello-world:${{cloudbees.version}}
           labels: app=preprod-python-helloworld
          
 
