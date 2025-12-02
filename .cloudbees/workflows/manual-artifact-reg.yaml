@@ -13,7 +13,7 @@ jobs:
           name: "cbpautomation/python-hello-world-docker"
           version: "02.06.58"
           url: "docker.io/cbpautomation/python-hello-world-docker:02.06.58"
-          digest: "sha256:669a6603970e8c8d97119297a66c174ff5414a121a82c169c3b8c91188a84384"
+          digest: "sha256:aa918cb1f684991ce9cb6c55d724510d630b22d582ef6de6f6f291b8ae10e671"
           
       - name: success_valid_env_reg_artifact
         uses: cloudbees-io/register-deployed-artifact@v2
@@ -60,7 +60,7 @@ jobs:
             status=1
           fi
 
-          if [ "${{ steps.getArtifactDetails.outputs.digest }}" = "sha256:669a6603970e8c8d97119297a66c174ff5414a121a82c169c3b8c91188a84384" ]; then
+          if [ "${{ steps.getArtifactDetails.outputs.digest }}" = "sha256:aa918cb1f684991ce9cb6c55d724510d630b22d582ef6de6f6f291b8ae10e671" ]; then
             echo "Both digests are same"
           else
             echo "Both digests are not same"
