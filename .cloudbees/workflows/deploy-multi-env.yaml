@@ -1,17 +1,66 @@
 apiVersion: automation.cloudbees.io/v1alpha1
 kind: workflow
-name: My workflow
-
+name: Multi env deployment
 on:
-  push:
-    branches:
-      - '**'
-
+  workflow_dispatch:
 jobs:
   build:
+    outputs:
+      artifact-id: ${{ fromJSON(steps.push-image.outputs.artifact-ids)[ format('index.docker.io/cbpautomation/python-hello-world-docker:{0}', cloudbees.version) ] }}
+   
     steps:
-      - name: Say hello
-        uses: docker://golang:1.20.3-alpine3.17
-        shell: sh
-        run: |
-          echo "hello world"
+      - uses: cloudbees-io/checkout@v1
+        name: checkout
+
+      - uses: cloudbees-io/configure-oci-credentials@v1
+        name: Set up Docker Hub registry
+        kind: deploy
+        with:
+          registry: https://index.docker.io/v1/
+          username: cbpautomation
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - uses: cloudbees-io/kaniko@v1
+        name: Push image to OCI registry
+        id: push-image
+        with:
+          destination: index.docker.io/cbpautomation/python-hello-world-docker:${{cloudbees.version}}
+          labels: app=cbp
+
+      - name: Publish workflow evidence item
+        uses: cloudbees-io/publish-evidence-item@v1
+        with:
+          content: |-
+            CB_VERSION: ${{cloudbees.version}}
+            echo "Date: 2025-12-16T14:32:05.802Z"
+            
+  deploy-qa:
+    needs: build
+    steps:
+      - name: Register deployed artifact
+        uses: cloudbees-io/register-deployed-artifact@v2
+        with:
+          artifact-id: ${{ needs.build.outputs.artifact-id }}
+          target-environment: QA
+
+      - name: Publish workflow evidence item
+        uses: cloudbees-io/publish-evidence-item@v1
+        with:
+          content: |-
+            CB_VERSION: ${{cloudbees.version}}
+            echo "Date: 2025-12-16T14:32:05.802Z"
+  deploy-prod:
+    needs: build
+    steps:
+      - name: Register deployed artifact
+        uses: cloudbees-io/register-deployed-artifact@v2
+        with:
+          artifact-id: ${{ needs.build.outputs.artifact-id }}
+          target-environment: PROD
+          
+      - name: Publish workflow evidence item
+        uses: cloudbees-io/publish-evidence-item@v1
+        with:
+          content: |-
+            CB_VERSION: ${{cloudbees.version}}
+            echo "Date: 2025-12-16T14:32:05.802Z"
