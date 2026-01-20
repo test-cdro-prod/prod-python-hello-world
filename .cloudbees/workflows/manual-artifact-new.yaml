@@ -7,7 +7,7 @@ jobs:
   env_reg_artifacts:
     steps:
       - name: Inform system that an artifact version was created
-        uses: cloudbees-io/register-build-artifact@v1
+        uses: cloudbees-io/register-build-artifact@v2
         id: register
         with:
           name: "cbpautomation/python-hello-world-docker"
@@ -21,4 +21,3 @@ jobs:
           labels: allPassed, deployed
           target-environment: "PROD"
           artifact-id: ${{ steps.register.outputs.artifact-id }}
-
