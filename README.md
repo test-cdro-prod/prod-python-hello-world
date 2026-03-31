@@ -37,7 +37,7 @@ Clone or navigate to the project directory where the Dockerfile and hello.py are
     ```nginx
     Hello World
     ```
-    This indicates that the Python script executed successfully inside the container.
+    This indicates that the Python script executed successfully inside the container
 
 ## Cleanup
 To stop and remove the container, run the following:
