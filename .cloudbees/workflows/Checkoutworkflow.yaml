@@ -4,9 +4,7 @@ name: Test automation caller test workflow
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-    - '**'
+  
 jobs:
   build:
     steps:
