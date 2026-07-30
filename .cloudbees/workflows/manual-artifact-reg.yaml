@@ -11,9 +11,9 @@ jobs:
         id: register
         with:
           name: "cbpautomation/python-hello-world-docker"
-          version: "28.06.56"
-          url: "docker.io/cbpautomation/python-hello-world-docker:28.06.56"
-          digest: "sha256:fc51dd27d783c9b7928df3b750754a2dd48f0e568f5e1f320bd75258687ee941"
+          version: "30.22.54"
+          url: "docker.io/cbpautomation/python-hello-world-docker:30.22.54"
+          digest: "sha256:5ca7d5291db07a51347997c4bec937119860553f913330ac05037ab8eb0c9b35"
           
       - name: success_valid_env_reg_artifact
         uses: cloudbees-io/register-deployed-artifact@v2
@@ -46,21 +46,21 @@ jobs:
             status=1
           fi
 
-          if [ "${{ steps.getArtifactDetails.outputs.version }}" = "28.06.56" ]; then
+          if [ "${{ steps.getArtifactDetails.outputs.version }}" = "30.22.54" ]; then
             echo "Both versions are same"
           else
             echo "Both versions are not same"
             status=1
           fi
 
-          if [ "${{ steps.getArtifactDetails.outputs.url }}" = "docker.io/cbpautomation/python-hello-world-docker:28.06.56" ]; then
+          if [ "${{ steps.getArtifactDetails.outputs.url }}" = "docker.io/cbpautomation/python-hello-world-docker:30.22.54" ]; then
             echo "Both urls are same"
           else
             echo "Both urls are not same"
             status=1
           fi
 
-          if [ "${{ steps.getArtifactDetails.outputs.digest }}" = "sha256:fc51dd27d783c9b7928df3b750754a2dd48f0e568f5e1f320bd75258687ee941" ]; then
+          if [ "${{ steps.getArtifactDetails.outputs.digest }}" = "sha256:5ca7d5291db07a51347997c4bec937119860553f913330ac05037ab8eb0c9b35" ]; then
             echo "Both digests are same"
           else
             echo "Both digests are not same"
